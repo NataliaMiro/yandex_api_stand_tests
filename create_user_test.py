@@ -1,6 +1,7 @@
 import sender_stand_request
 import data
 
+
 # эта функция меняет значения в параметре firstName
 def get_user_body(first_name):
     # копирование словаря с телом запроса из файла data, чтобы не потерять данные в исходном словаре
@@ -10,32 +11,8 @@ def get_user_body(first_name):
     # возвращается новый словарь с нужным значением firstName
     return current_body
 
-# Тест 1. Успешное создание пользователя
-# Параметр fisrtName состоит из 2 символов
 
-def test_create_user_2_letter_in_first_name_get_success_response():
-    # В переменную user_body сохраняется обновленное тело запроса с именем “Аа”
-    user_body = get_user_body("Аа")
-    # В переменную user_response сохраняется результат запроса на создание пользователя
-    user_response = sender_stand_request.post_new_user(user_body)
-
-    # Проверяется, что код ответа равен 201
-    assert user_response.status_code == 201
-    # Проверяется, что в ответе есть поле authToken, и оно не пустое
-    assert user_response.json()["authToken"] != ""
-
-    # В переменную users_table_response сохраняется результат запрос на получение данных из таблицы user_model
-    users_table_response = sender_stand_request.get_users_table()
-    # Строка, которая должна быть в ответе запроса на получение данных из таблицы users
-    str_user = user_body["firstName"] + "," + user_body["phone"] + "," \
-               + user_body["address"] + ",,," + user_response.json()["authToken"]
-
-    # Проверка, что такой пользователь есть, и он единственный
-    assert users_table_response.text.count(str_user) == 1
-
-    # Функция для позитивной проверки
-
-
+# Функция для позитивной проверки
 def positive_assert(first_name):
     # В переменную user_body сохраняется обновленное тело запроса
     user_body = get_user_body(first_name)
@@ -57,19 +34,20 @@ def positive_assert(first_name):
     # Проверка, что такой пользователь есть, и он единственный
     assert users_table_response.text.count(str_user) == 1
 
-    # Тест 1. Успешное создание пользователя
-    # Параметр fisrtName состоит из 2 символов
 
-
+# Тест 1. Успешное создание пользователя
+# Параметр fisrtName состоит из 2 символов
 def test_create_user_2_letter_in_first_name_get_success_response():
     positive_assert("Aa")
 
+
+# Тест 2. Успешное создание пользователя
+# Параметр fisrtName состоит из 15 символов
 def test_create_user_15_letter_in_first_name_get_success_response():
-    positive_assert("Aa")
+    positive_assert("Aaaaaaaaaaaaaaa")
 
 
-
- # Функция для негативной проверки
+# Функция для негативной проверки
 def negative_assert_symbol(first_name):
     # В переменную user_body сохраняется обновлённое тело запроса
     user_body = get_user_body(first_name)
@@ -85,18 +63,17 @@ def negative_assert_symbol(first_name):
                                         "длина должна быть не менее 2 и не более 15 символов"
 
 
-
-
-
 # Тест 3. Ошибка
 # Параметр fisrtName состоит из 1 символа
 def test_create_user_1_letter_in_first_name_get_error_response():
     negative_assert_symbol("A")
 
+
 # Тест 4. Ошибка
- # Параметр fisrtName состоит из 16 символов
+# Параметр fisrtName состоит из 16 символов
 def test_create_user_16_letter_in_first_name_get_error_response():
     negative_assert_symbol("Aaaaaaaaaaaaaaaa")
+
 
 # Тест 5. Успешное создание пользователя
 # Параметр fisrtName состоит из английских букв
@@ -109,25 +86,27 @@ def test_create_user_english_letter_in_first_name_get_success_response():
 def test_create_user_russian_letter_in_first_name_get_success_response():
     positive_assert("Мария")
 
+
 # Тест 7. Ошибка
 # Параметр fisrtName содержит пробелы
 def test_create_user_has_space_in_first_name_get_error_response():
     negative_assert_symbol("Человек и КО")
+
 
 # Тест 8.  Ошибка
 # Параметр fisrtName состоит из строки спецсимволов
 def test_create_user_has_special_symbol_in_first_name_get_error_response():
     negative_assert_symbol("\"№%@\",")
 
+
 # Тест 9. Ошибка
 # Параметр fisrtName состоит из строки с цифрами
 def test_create_user_has_number_in_first_name_get_error_response():
      negative_assert_symbol("123")
 
-     # Функция для негативной проверки
-     # В ответе ошибка: "Не все необходимые параметры были переданы"
 
-
+# Функция для негативной проверки
+# В ответе ошибка: "Не все необходимые параметры были переданы"
 def negative_assert_no_firstname(user_body):
     # В переменную response сохрани результат вызова функции
     response = sender_stand_request.post_new_user(user_body)
@@ -163,6 +142,7 @@ def test_create_user_empty_first_name_get_error_response():
     negative_assert_no_firstname(user_body)
 
 
+# Тест 12. Ошибка. Тип параметра firstName: число
 def test_create_user_number_type_first_name_get_error_response():
     # В переменную response сохрани результат вызова функции
     user_body = get_user_body(12)
@@ -170,4 +150,3 @@ def test_create_user_number_type_first_name_get_error_response():
 
     # Проверь, что код ответа — 400
     assert response.status_code == 400
-
