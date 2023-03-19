@@ -17,5 +17,3 @@ product_ids = {
 kit_body = {
     "name": "Мой набор"
 }
-
-

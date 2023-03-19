@@ -34,7 +34,8 @@ def positive_assert(first_name):
     # Проверка, что такой пользователь есть, и он единственный
     assert users_table_response.text.count(str_user) == 1
 
-    # Функция для негативной проверки
+
+# Функция для негативной проверки
 def negative_assert_symbol(first_name):
     # В переменную user_body сохраняется обновлённое тело запроса
     user_body = get_user_body(first_name)
@@ -60,9 +61,6 @@ def test_create_user_2_letter_in_first_name_get_success_response():
 # Параметр fisrtName состоит из 15 символов
 def test_create_user_15_letter_in_first_name_get_success_response():
     positive_assert("Aaaaaaaaaaaaaaa")
-
-
-
 
 
 # Тест 3. Ошибка
