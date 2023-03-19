@@ -1,8 +1,29 @@
-# pytest cache directory #
+# Тесты на проверку параметра firstName при создании пользователя в Яндекс.Прилавок с помощью API Яндекс.Прилавок
 
-This directory contains data from the pytest's cache plugin,
-which provides the `--lf` and `--ff` options, as well as the `cache` fixture.
 
-**Do not** commit this to version control.
+Для запуска проекта должны быть установлены: 
+- интерпретатор `Python` и среда разработки `PyCharm`
+- среда тестирования `Pytest`, библиотека `requests`
+- запущен [сервер](url.serverhub.praktikum-services.ru) в локальном режиме 
 
-See [the docs](https://docs.pytest.org/en/stable/how-to/cache.html) for more information.
+
+Запуск всех тестов выполняется командой `pytest create_user_test.py`
+
+
+
+# Тесты на проверку параметра name при создании наборов с продуктами в Яндекс.Прилавок с помощью API Яндекс.Прилавок #
+
+Для запуска проекта должны быть установлены: 
+- интерпретатор `Python` и среда разработки `PyCharm`
+- среда тестирования `Pytest`, библиотека `requests`
+- запущен [сервер](url.serverhub.praktikum-services.ru) в локальном режиме
+
+Предварительно нужно:
+- выполнить запрос на создание пользователя и запомнить токен авторизации `authToken`
+- выполнить запрос на создание личного набора для этого пользователя. Обязательно передать заголовок `Authorization`
+Запуск всех тестов выполняется командой `pytest create_kit_name_kit_test.py`
+
+
+
+
+
