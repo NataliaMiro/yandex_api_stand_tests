@@ -45,6 +45,16 @@ def negative_assert_code_400(name):
     assert kit_response.status_code == 400
 
 
+# Функция для негативной проверки (имя не передано)
+def negative_assert_no_name(kit_body):
+    # Передаётся auth_token
+    auth_token = get_new_user_token()
+    # В переменную response сохраняется результат
+    kit_response = sender_stand_request.post_new_client_kit(kit_body, auth_token)
+    #  Проверяется, что код ответа = 400
+    assert kit_response.status_code == 400
+
+
 # Тест 1. Допустимое количество символов в имени набора.
 #  Параметр name состоит из 1 символа
 def test_create_kit_1_letter_in_kit_name_get_success_response():
@@ -99,8 +109,12 @@ def test_create_kit_numbers_in_kit_name_get_success_response():
 
 
 # Тест 10. Ошибка. Параметр name не передан
-def test_create_kit_empty_in_kit_name_get_error_response():
-    negative_assert_code_400("")
+def test_create_kit_no_name_get_error_response():
+    kit_body = data.kit_body.copy()
+    # Удаление параметра name из запросв
+    kit_body.pop("name")
+    # Проверка полученного ответа
+    negative_assert_no_name(kit_body)
 
 
 # Тест 11. Ошибка. В параметр name  передан другой тип данных
