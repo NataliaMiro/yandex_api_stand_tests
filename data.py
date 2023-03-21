@@ -9,10 +9,6 @@ user_body = {
     "address": "г. Москва, ул. Пушкина, д. 10"
 }
 
-product_ids = {
-    "ids": [1, 2, 3]
-}
-
 
 kit_body = {
     "name": "Мой набор"
